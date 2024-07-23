@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "me.ayydxn.worldsaver.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
