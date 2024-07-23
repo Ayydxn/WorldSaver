@@ -3,7 +3,7 @@
 	"package": "me.ayydxn.worldsaver.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-
+		"MinecraftServerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
