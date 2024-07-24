@@ -9,7 +9,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.common.base.Preconditions;
-import net.fabricmc.loader.api.FabricLoader;
+import me.ayydxn.worldsaver.utils.WorldSaverConstants;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class GoogleDriveUtils
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(credentialsJSONInputStream));
 
             GoogleAuthorizationCodeFlow authorizationCodeFlow = new GoogleAuthorizationCodeFlow.Builder(netHttpTransport, jsonFactory, clientSecrets, GoogleAPIConstants.GOOGLE_DRIVE_SCOPES)
-                    .setDataStoreFactory(new FileDataStoreFactory(new File(FabricLoader.getInstance().getGameDir() + "/world-saver/google-auth")))
+                    .setDataStoreFactory(new FileDataStoreFactory(new File(WorldSaverConstants.WORLD_SAVER_DIRECTORY + "/google-auth")))
                     .setAccessType("offline")
                     .build();
 

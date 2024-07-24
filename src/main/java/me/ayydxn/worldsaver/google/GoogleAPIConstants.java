@@ -7,5 +7,5 @@ import java.util.List;
 
 public class GoogleAPIConstants
 {
-    public static final List<String> GOOGLE_DRIVE_SCOPES = Lists.newArrayList(DriveScopes.DRIVE);
+    public static final List<String> GOOGLE_DRIVE_SCOPES = Lists.newArrayList(DriveScopes.DRIVE, DriveScopes.DRIVE_FILE);
 }

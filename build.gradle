@@ -41,6 +41,9 @@ dependencies {
 	implementation include("com.google.api-client:google-api-client:${project.google_api_client_version}")
 	implementation include("com.google.oauth-client:google-oauth-client-jetty:${project.google_oauth_client_version}")
 	implementation include("com.google.apis:google-api-services-drive:${project.google_drive_api_services_version}")
+
+	// Zip4J
+	implementation include("net.lingala.zip4j:zip4j:${project.zip4j_version}")
 }
 
 processResources {

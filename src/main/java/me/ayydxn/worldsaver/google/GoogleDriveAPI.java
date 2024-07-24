@@ -20,6 +20,8 @@ public class GoogleDriveAPI
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
     private final Drive googleDriveService;
+    private final GoogleDriveFileManager googleDriveFileManager;
+    private final String worldSaverFolderID;
 
     private GoogleDriveAPI() throws IOException, GeneralSecurityException
     {
@@ -29,6 +31,9 @@ public class GoogleDriveAPI
         this.googleDriveService = new Drive.Builder(netHttpTransport, JSON_FACTORY, credential)
                 .setApplicationName("World Saver")
                 .build();
+
+        this.googleDriveFileManager = new GoogleDriveFileManager(googleDriveService);
+        this.worldSaverFolderID = this.googleDriveFileManager.createFolder("Ayydxn's World Saver");
     }
 
     public static void initialize()
@@ -59,8 +64,18 @@ public class GoogleDriveAPI
         return INSTANCE;
     }
 
-    public Drive getDriveService()
+    public static Logger getLogger()
     {
-        return this.googleDriveService;
+        return LOGGER;
+    }
+
+    public GoogleDriveFileManager getGoogleDriveFileManager()
+    {
+        return this.googleDriveFileManager;
+    }
+
+    public String getWorldSaverFolderID()
+    {
+        return this.worldSaverFolderID;
     }
 }

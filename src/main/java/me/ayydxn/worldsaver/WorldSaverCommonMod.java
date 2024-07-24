@@ -1,6 +1,7 @@
 package me.ayydxn.worldsaver;
 
 import me.ayydxn.worldsaver.config.WorldSaverGameOptions;
+import me.ayydxn.worldsaver.events.WorldSaveEvents;
 import me.ayydxn.worldsaver.google.GoogleDriveAPI;
 import me.ayydxn.worldsaver.utils.WorldSaverConstants;
 import net.fabricmc.api.ModInitializer;
@@ -27,6 +28,9 @@ public class WorldSaverCommonMod implements ModInitializer
         this.gameOptions = WorldSaverGameOptions.load();
 
         GoogleDriveAPI.initialize();
+
+        WorldSaveEvents.EXIT_WORLD.register(WorldPackager::packageWorld);
+        WorldSaveEvents.AUTO_SAVE.register(WorldPackager::packageWorld);
     }
 
     public static WorldSaverCommonMod getInstance()
