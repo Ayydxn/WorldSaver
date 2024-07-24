@@ -1,5 +1,7 @@
 package me.ayydxn.worldsaver.mixin;
 
+import me.ayydxn.worldsaver.WorldSaverCommonMod;
+import me.ayydxn.worldsaver.config.WorldSaverGameOptions;
 import me.ayydxn.worldsaver.events.WorldSaveEvents;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,25 +15,36 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin
 {
-    // TODO: (Ayydxn) Should be configurable.
     @Unique
-    private int ticksUntilAutosave = 200;
+    private final WorldSaverGameOptions gameOptions = WorldSaverCommonMod.getInstance().getGameOptions();
+
+    @Unique
+    private long ticksUntilAutosave = this.gameOptions.autosaveInterval * 20L;
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", ordinal = 1))
     public void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci)
     {
+        if (!this.gameOptions.enableWorldSaving)
+            return;
+
+        if (!this.gameOptions.enableAutosave)
+            return;
+
         --this.ticksUntilAutosave;
-        if (this.ticksUntilAutosave <= 0)
+        if (this.ticksUntilAutosave <= 0L)
         {
             WorldSaveEvents.AUTO_SAVE.invoker().onAutoSave((MinecraftServer) (Object) this);
 
-            this.ticksUntilAutosave = 200;
+            this.ticksUntilAutosave = this.gameOptions.autosaveInterval * 20L;
         }
     }
 
     @Inject(method = "shutdown", at = @At("TAIL"))
     public void onServerShutdown(CallbackInfo ci)
     {
+        if (!this.gameOptions.enableWorldSaving)
+            return;
+
         WorldSaveEvents.EXIT_WORLD.invoker().onWorldExit((MinecraftServer) (Object) this);
     }
 }

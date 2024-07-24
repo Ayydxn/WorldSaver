@@ -1,0 +1,11 @@
+{
+  "worldSaver.options.category.worldSaver": "World Saver",
+  "worldSaver.options.worldSaver.enableWorldSaving": "Enable World Saving",
+  "worldSaver.options.worldSaver.enableWorldSaving.description": "Determines if World Saver will save worlds to Google Drive.",
+  "worldSaver.options.worldSaver.enableAutosave": "Enable Autosave",
+  "worldSaver.options.worldSaver.enableAutosave.description": "Determines if World Saver will automatically save worlds to Google Drive. How often this happens is dependent on the value of Autosave Interval setting.",
+  "worldSaver.options.worldSaver.autosaveInterval": "Autosave Interval",
+  "worldSaver.options.worldSaver.autosaveInterval.description": "Determines how often World Saver will autosave worlds to Google Drive. This cannot be changed while in a world.",
+
+  "worldSaver.gui.optionsButtonText": "World Saver..."
+}
