@@ -1,6 +1,7 @@
 package me.ayydxn.worldsaver;
 
 import me.ayydxn.worldsaver.config.WorldSaverGameOptions;
+import me.ayydxn.worldsaver.google.GoogleDriveAPI;
 import me.ayydxn.worldsaver.utils.WorldSaverConstants;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -24,6 +25,8 @@ public class WorldSaverCommonMod implements ModInitializer
                 .getMetadata().getVersion().getFriendlyString());
 
         this.gameOptions = WorldSaverGameOptions.load();
+
+        GoogleDriveAPI.initialize();
     }
 
     public static WorldSaverCommonMod getInstance()

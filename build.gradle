@@ -21,6 +21,8 @@ repositories {
 		name = "isXander's Maven"
 		url = "https://maven.isxander.dev/releases"
 	}
+
+	mavenCentral()
 }
 
 dependencies {
@@ -34,6 +36,11 @@ dependencies {
 
 	// YetAnotherConfigLib. This is used for World Saver's configuration screen.
 	modImplementation include("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+
+	// Google Drive API
+	implementation include("com.google.api-client:google-api-client:${project.google_api_client_version}")
+	implementation include("com.google.oauth-client:google-oauth-client-jetty:${project.google_oauth_client_version}")
+	implementation include("com.google.apis:google-api-services-drive:${project.google_drive_api_services_version}")
 }
 
 processResources {
