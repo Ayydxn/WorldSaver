@@ -9,6 +9,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
+import java.io.IOException;
+
 public class WorldSaverCommonMod implements ModInitializer
 {
     private static WorldSaverCommonMod INSTANCE;
@@ -31,6 +33,17 @@ public class WorldSaverCommonMod implements ModInitializer
 
         WorldSaveEvents.EXIT_WORLD.register(WorldPackager::packageWorld);
         WorldSaveEvents.AUTO_SAVE.register(WorldPackager::packageWorld);
+        WorldSaveEvents.CLIENT_CLOSE.register(client ->
+        {
+            try
+            {
+                WorldPackager.uploadPackagedWorlds();
+            }
+            catch (IOException exception)
+            {
+                exception.printStackTrace();
+            }
+        });
     }
 
     public static WorldSaverCommonMod getInstance()

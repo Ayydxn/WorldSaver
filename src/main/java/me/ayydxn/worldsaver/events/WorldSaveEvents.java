@@ -2,6 +2,7 @@ package me.ayydxn.worldsaver.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.MinecraftServer;
 
 /**
@@ -27,6 +28,16 @@ public final class WorldSaveEvents
             autoSaveListener.onAutoSave(server);
     });
 
+    /**
+     * Called when the Minecraft client is closed. I know a similar event already exists within the Fabric API, but it doesn't run after the integrated server
+     * stops which I need it to.
+     */
+    public static final Event<ClientClose> CLIENT_CLOSE = EventFactory.createArrayBacked(ClientClose.class, (listeners) -> (client) ->
+    {
+        for (ClientClose clientCloseListener : listeners)
+            clientCloseListener.onClientClose(client);
+    });
+
     @FunctionalInterface
     public interface ExitWorld
     {
@@ -37,5 +48,11 @@ public final class WorldSaveEvents
     public interface AutoSave
     {
         void onAutoSave(MinecraftServer server);
+    }
+
+    @FunctionalInterface
+    public interface ClientClose
+    {
+        void onClientClose(MinecraftClient client);
     }
 }

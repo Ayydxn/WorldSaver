@@ -6,6 +6,7 @@
 		"MinecraftServerMixin"
 	],
 	"client": [
+		"client.MinecraftClientMixin",
 		"client.OptionsScreenMixin"
 	],
 	"injectors": {
