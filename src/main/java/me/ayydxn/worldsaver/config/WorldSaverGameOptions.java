@@ -1,10 +1,8 @@
 package me.ayydxn.worldsaver.config;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import me.ayydxn.worldsaver.WorldSaverCommonMod;
+import me.ayydxn.worldsaver.utils.WorldSaverConstants;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.FileUtils;
 
@@ -16,11 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 public class WorldSaverGameOptions
 {
-    private static final Gson GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-            .create();
-
     private static final Path CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve("world-saver-settings.json");
 
     public boolean enableWorldSaving = true;
@@ -51,7 +44,7 @@ public class WorldSaverGameOptions
 
             try
             {
-                worldSaverGameOptions = GSON.fromJson(configFileContents.toString(), WorldSaverGameOptions.class);
+                worldSaverGameOptions = WorldSaverConstants.GSON.fromJson(configFileContents.toString(), WorldSaverGameOptions.class);
             }
             catch (JsonSyntaxException exception)
             {
@@ -75,7 +68,7 @@ public class WorldSaverGameOptions
     {
         try
         {
-            FileUtils.writeStringToFile(CONFIG_FILE.toFile(), GSON.toJson(this), StandardCharsets.UTF_8);
+            FileUtils.writeStringToFile(CONFIG_FILE.toFile(), WorldSaverConstants.GSON.toJson(this), StandardCharsets.UTF_8);
         }
         catch (IOException exception)
         {

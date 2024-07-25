@@ -17,6 +17,12 @@
 	"entrypoints": {
 		"main": [
 			"me.ayydxn.worldsaver.WorldSaverCommonMod"
+		],
+		"client": [
+			"me.ayydxn.worldsaver.WorldSaverClientMod"
+		],
+		"server": [
+			"me.ayydxn.worldsaver.WorldSaverServerMod"
 		]
 	},
 	"mixins": [

@@ -3,12 +3,16 @@ package me.ayydxn.worldsaver.mixin;
 import me.ayydxn.worldsaver.WorldSaverCommonMod;
 import me.ayydxn.worldsaver.config.WorldSaverGameOptions;
 import me.ayydxn.worldsaver.events.WorldSaveEvents;
+import me.ayydxn.worldsaver.events.server.WorldSaveServerEvents;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.MinecraftDedicatedServer;
+import org.checkerframework.checker.units.qual.A;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.BooleanSupplier;
 
@@ -45,6 +49,7 @@ public abstract class MinecraftServerMixin
         if (!this.gameOptions.enableWorldSaving)
             return;
 
+        WorldSaveServerEvents.SERVER_CLOSE.invoker().onServerClose((MinecraftServer) (Object) this);
         WorldSaveEvents.EXIT_WORLD.invoker().onWorldExit((MinecraftServer) (Object) this);
     }
 }

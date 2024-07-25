@@ -37,10 +37,20 @@ dependencies {
 	// YetAnotherConfigLib. This is used for World Saver's configuration screen.
 	modImplementation include("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
 
-	// Google Drive API
+	// Google Drive API. We also have to include their dependencies because (for some reason?) they
+	// don't just come with the JARs we use and are used by.
 	implementation include("com.google.api-client:google-api-client:${project.google_api_client_version}")
 	implementation include("com.google.oauth-client:google-oauth-client-jetty:${project.google_oauth_client_version}")
 	implementation include("com.google.apis:google-api-services-drive:${project.google_drive_api_services_version}")
+
+	include("com.google.http-client:google-http-client:${project.google_http_client_version}")
+	include("com.google.http-client:google-http-client-apache-v2:${project.google_http_client_version}")
+	include("com.google.http-client:google-http-client-gson:${project.google_http_client_version}")
+	include("com.google.oauth-client:google-oauth-client-java6:${project.google_oauth_client_version}")
+	include("com.google.oauth-client:google-oauth-client:${project.google_oauth_client_version}")
+	include("io.opencensus:opencensus-api:${project.opencensus_version}")
+	include("io.opencensus:opencensus-contrib-http-util:${project.opencensus_version}")
+	include("io.grpc:grpc-context:1.27.2")
 
 	// Zip4J
 	implementation include("net.lingala.zip4j:zip4j:${project.zip4j_version}")

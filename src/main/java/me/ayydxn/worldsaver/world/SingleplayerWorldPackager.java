@@ -1,8 +1,8 @@
-package me.ayydxn.worldsaver;
+package me.ayydxn.worldsaver.world;
 
+import me.ayydxn.worldsaver.WorldSaverCommonMod;
 import me.ayydxn.worldsaver.google.GoogleDriveAPI;
 import me.ayydxn.worldsaver.google.GoogleDriveFileManager;
-import me.ayydxn.worldsaver.utils.WorldSaverConstants;
 import net.lingala.zip4j.ZipFile;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.WorldSavePath;
@@ -13,11 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
-public class WorldPackager
+public class SingleplayerWorldPackager extends WorldPackager
 {
-    private static final Path WORLD_SAVER_SAVES_DIRECTORY = Path.of(WorldSaverConstants.WORLD_SAVER_DIRECTORY + "/world-saves");
-
-    public static void packageWorld(MinecraftServer server)
+    @Override
+    public void packageWorld(MinecraftServer server)
     {
         if (!Files.exists(WORLD_SAVER_SAVES_DIRECTORY))
         {
@@ -61,25 +60,33 @@ public class WorldPackager
         }
     }
 
-    public static void uploadPackagedWorlds() throws IOException
+    @Override
+    public void uploadPackagedWorlds()
     {
         GoogleDriveFileManager googleDriveFileManager = GoogleDriveAPI.getInstance().getGoogleDriveFileManager();
 
-        for (Path worldSaveFolder : Files.list(WORLD_SAVER_SAVES_DIRECTORY).toList())
+        try
         {
-            String worldSavesFolderID = googleDriveFileManager.createNestedFolder(GoogleDriveAPI.getInstance().getWorldSaverFolderID(),
-                    worldSaveFolder.toFile().getName());
-
-            for (Path worldSave : Files.list(worldSaveFolder).toList())
+            for (Path worldSaveFolder : Files.list(WORLD_SAVER_SAVES_DIRECTORY).toList())
             {
-                if (!FilenameUtils.getExtension(worldSave.toFile().getName()).equals("zip"))
-                {
-                    WorldSaverCommonMod.getLogger().warn("'{}' isn't a world save! Skipping it and not uploading it...", worldSave.toFile().getName());
-                    continue;
-                }
+                String worldSavesFolderID = googleDriveFileManager.createNestedFolder(GoogleDriveAPI.getInstance().getWorldSaverFolderID(),
+                        worldSaveFolder.toFile().getName() + " (Singleplayer)");
 
-                googleDriveFileManager.uploadFile(worldSavesFolderID, "application/zip", worldSave.toFile());
+                for (Path worldSave : Files.list(worldSaveFolder).toList())
+                {
+                    if (!FilenameUtils.getExtension(worldSave.toFile().getName()).equals("zip"))
+                    {
+                        WorldSaverCommonMod.getLogger().warn("'{}' isn't a world save! Skipping it and not uploading it...", worldSave.toFile().getName());
+                        continue;
+                    }
+
+                    googleDriveFileManager.uploadFile(worldSavesFolderID, "application/zip", worldSave.toFile());
+                }
             }
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
         }
     }
 }
